@@ -1,61 +1,52 @@
-import { useState,ChangeEvent } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, ChangeEvent, useCallback } from "react";
+// import reactLogo from '../assets/react.svg'
+// import viteLogo from '/vite.svg'
+import "./App.css";
+import MemoList from "./MemoList";
 
 function App() {
-  const [text, setText] = useState<string>("")
-  const [memos, setMemos] = useState<string[]>([]);
+    const [text, setText] = useState<string>("");
+    const [memos, setMemos] = useState<string[]>([]);
 
-  const [count, setCount] = useState(0)
+    console.log("App");
 
-  const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value)
-  };
+    // const [count, setCount] = useState(0)
 
-  const onClickAdd = () => {
-    const newMemos = [...memos];
-    newMemos.push(text);
-    setMemos(newMemos);
-    setText("");
-  };
+    const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
+        setText(e.target.value);
+    };
 
-  const onClickDelete = (index: number) => {
-    const newMemos = [...memos];
-    newMemos.splice(index, 1);
-    setMemos(newMemos);
-  };
+    const onClickAdd = () => {
+        const newMemos = [...memos];
+        newMemos.push(text);
+        setMemos(newMemos);
+        setText("");
+    };
 
+    const onClickDelete =  useCallback((index: number) => {
+        const newMemos = [...memos];
+        newMemos.splice(index, 1);
+        setMemos(newMemos);
+    },[memos]);
 
-  return (
-    <>
-      <div>
-        <h1>簡易メモアプリ</h1>
-        <input type="text" value={text} onChange={onChangeText} />
-        <button onClick={onClickAdd}>追加</button>
-        <div>
-          <p>メモ一覧</p>
-          <ul>
-            {memos.map((memo,index) =>(
-              <li key={memo}>
+    return (
+        <>
+            <div>
+                <h1>簡易メモアプリ4</h1>
+                <input type="text" value={text} onChange={onChangeText} />
+                <button onClick={onClickAdd}>追加</button>
                 <div>
-                <p>{memo}</p>
-                <button onClick={()=>onClickDelete(index)}>削除</button>
+                    <p>メモ一覧</p>
+                    <MemoList memos={memos} deleteMemo={onClickDelete} />
                 </div>
-              </li>
-            ))}
-          </ul>
+            </div>
 
-        </div>
-
-
-        <a href="https://vite.dev" target="_blank">
+            {/* <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-      </div>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
@@ -67,9 +58,9 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </p> */}
+        </>
+    );
 }
 
-export default App
+export default App;
