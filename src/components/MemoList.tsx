@@ -1,11 +1,12 @@
 // import { useState,ChangeEvent } from 'react'
+import { memo } from "react";
 
 type MemoListProps = {
     memos: string[];
     deleteMemo: (index: number) => void;
 };
 
-const MemoList = ({ memos, deleteMemo }: MemoListProps) => {
+const MemoList = memo(({ memos, deleteMemo }: MemoListProps) => {
     console.log("MemoList");
 
     return (
@@ -20,6 +21,6 @@ const MemoList = ({ memos, deleteMemo }: MemoListProps) => {
             ))}
         </ul>
     );
-};
+});
 
 export default MemoList;

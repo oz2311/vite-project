@@ -3,10 +3,11 @@ import { useState, ChangeEvent, useCallback } from "react";
 // import viteLogo from '/vite.svg'
 import "./App.css";
 import MemoList from "./MemoList";
+import { useMemoList } from "../hooks/useMemoList";
 
 function App() {
+    const { memos, addTodo, deleteTodo } = useMemoList();
     const [text, setText] = useState<string>("");
-    const [memos, setMemos] = useState<string[]>([]);
 
     console.log("App");
 
@@ -17,22 +18,18 @@ function App() {
     };
 
     const onClickAdd = () => {
-        const newMemos = [...memos];
-        newMemos.push(text);
-        setMemos(newMemos);
+        addTodo(text);
         setText("");
     };
 
     const onClickDelete =  useCallback((index: number) => {
-        const newMemos = [...memos];
-        newMemos.splice(index, 1);
-        setMemos(newMemos);
-    },[memos]);
+        deleteTodo(index);
+    },[deleteTodo]);
 
     return (
         <>
             <div>
-                <h1>簡易メモアプリ4</h1>
+                <h1>簡易メモアプリ5</h1>
                 <input type="text" value={text} onChange={onChangeText} />
                 <button onClick={onClickAdd}>追加</button>
                 <div>
